@@ -35,6 +35,7 @@ function create_textarea(){
     input.rows = 10;
     input.cols = 50;
     input.id = "input-matrix";
+    input.placeholder = "0 1 1 1 1 0\n1 0 1 1 0 1\n1 1 0 1 1 0\n1 1 1 0 0 1\n1 0 1 0 0 0\n0 1 0 1 0 0";
     container.appendChild(input);
     disable_button();
 }
@@ -96,29 +97,18 @@ function checkValidMatrix(){
     return false;
 }
 
-function checkExistCircuit(){
+function checkExist(){
     let s,d = 0;
     for (let i = 0; i < array.length; i++) {
         s = 0;
         for (let j = 0; j < array.length; j++) 
             s += array[i][j];
-            if(s%2) d++;
-    }
-    return !d;
-}
-
-function checkExistPath(){
-    let s,d = 0;
-    for (let i = 0; i < array.length; i++) {
-        s = 0;
-            for (let j = 0; j < array.length; j++)
-                s += array[i][j];
             if(s%2) {
                     d++;
                     u = i;
                 }
     }
-    return d==2;
+    return d;
 }
 
 function PathEuler(){
@@ -172,19 +162,27 @@ function main(){
         });
     }
     if(checkValidMatrix()){
-        if(checkExistPath()) {
-            let path = PathEuler();
-            conclusion.innerHTML = "Có đường đi Euler: ";
-            result.innerHTML = path;
+        let d = checkExist();
+        if(d===0){
+                u = 1;
+                let circuit = PathEuler();
+                conclusion.innerHTML = "Có chu trình Euler: ";
+                result.innerHTML = circuit;
         }
-        else {
-            conclusion.innerHTML = "Không có đường đi Euler!";
-            result.innerHTML = "";
+        else{
+            if(d===2) {
+                let path = PathEuler();
+                conclusion.innerHTML = "Có đường đi Euler: ";
+                result.innerHTML = path;
+            }
+            else {
+                conclusion.innerHTML = "Không có đường đi Euler vì đồ thị có "+d+" đỉnh bậc lẻ!";
+                result.innerHTML = "";
+            }
         }
     }
     else {
             conclusion.innerHTML = "Ma trận kề không hợp lệ!";
             result.innerHTML = "";
     }
-    console.log(array)
 }
