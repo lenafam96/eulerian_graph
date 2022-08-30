@@ -35,7 +35,7 @@ function create_textarea(){
     input.rows = 10;
     input.cols = 50;
     input.id = "input-matrix";
-    input.placeholder = "0 1 1 1 1 0\n1 0 1 1 0 1\n1 1 0 1 1 0\n1 1 1 0 0 1\n1 0 1 0 0 0\n0 1 0 1 0 0";
+    input.placeholder = "0 1 0 0 0\n1 0 1 1 1\n0 1 0 1 0\n0 1 1 0 1\n0 1 0 1 0";
     container.appendChild(input);
     disable_button();
 }
